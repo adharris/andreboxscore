@@ -18,46 +18,65 @@
     <div class="jumbotron">
       <h1>The Andre Box Score</h1>
       <div class="row">
-        <div class="col-md-5 col-md-offset-7">
-          <div class="well">
-            <blockquote class='blockquote-reverse'>
-              The more games I go to, the better the RedSox do.
-              <footer>Andre</footer>
-            </blockquote>
-          </div>
+        <div class="col-md-6 col-md-offset-6">
+          <blockquote class='blockquote-reverse pull-right'>
+            "The more games I go to, the better the RedSox do."
+            <footer>Andre</footer>
+          </blockquote>
         </div>
       </div>
     </div>
 
+
     <div class="container" ng-controller="ScoreController">
+
       <div class="row">
-        <div class="col-md-8 col-md-offset-2 list-group">         
-          <div class="list-group-item" ng-repeat="game in games track by $index">
-            <div class="row">
-              <div class="col-md-2 text-center">{{ game.date | date }}</div>
-              <div class="col-md-6">
-                <div class="row">
-                  <div class="col-xs-5 text-right">
-                    <team team="game.away"></team> 
-                  </div>
-                  <div class="col-xs-2 text-center">
-                    @
-                  </div>
-                  <div class="col-xs-5">
-                    <team team="game.home"></team> 
+        <div class="col-md-12 text-center">
+          <p class="lead">
+            Of the <span ng-pluralize count="games.length" when="{one: '1 game', other: '{} games'}"></span>
+            Andre has attended in 2014, the <team team="'Boston Red Sox'"></team> are:
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 text-center score">
+          <span>{{ wins }}</span>
+          -
+          <span>{{ losses }}</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">         
+          <div class="list-group">
+            <div class="list-group-item" ng-repeat="game in games track by $index">
+              <div class="row">
+                <div class="col-md-2 text-center">{{ game.date | date }}</div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-xs-5 text-right">
+                      <team team="game.away"></team> 
+                    </div>
+                    <div class="col-xs-2 text-center">
+                      @
+                    </div>
+                    <div class="col-xs-5">
+                      <team team="game.home"></team> 
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <span>{{ game.away_score }}</span> - <span>{{ game.home_score }}</span>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    {{ {true: 'Won', false: 'Lost'}[game.outcome] }}
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a ng-href="game.url">recap</a>
+                <div class="col-md-4">
+                  <div class="row">
+                    <div class="col-xs-4 text-center">
+                      <span>{{ game.away_score }}</span> - <span>{{ game.home_score }}</span>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                      {{ {true: 'Won', false: 'Lost'}[game.outcome] }}
+                    </div>
+                    <div class="col-xs-4 text-center">
+                      <a ng-href="{{game.url}}" target="_blank">recap</a>
+                    </div>
                   </div>
                 </div>
               </div>

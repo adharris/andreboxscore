@@ -37,8 +37,14 @@ angular.module("app", [])
   console.log("booted");
   $scope.games =  "test";
   $scope.colors = colors;
-  $http.get("/games.json").then(function(response) {
+  $http.get("games.json").then(function(response) {
     $scope.games = response.data.games;
+    $scope.wins = 0;
+    $scope.losses = 0;
+    for (var i = 0; i < response.data.games.length; i++) {
+      if (response.data.games[i].outcome) $scope.wins++;
+      else $scope.losses++;
+    } 
   });
 })
 

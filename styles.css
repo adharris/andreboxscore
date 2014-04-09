@@ -1,11 +1,29 @@
 body {
   background-color: #002244;
+  color: #eee;
 }
 
-h1, h2, h3 { font-family: 'Special Elite', cursive;}
+h1, .score, .team { font-family: 'Special Elite', cursive;}
+
+.score { font-size: 100px }
+
+blockquote footer:after {
+  content: '' !important;
+}
+
+blockquote {
+  font-style: italic;
+  color: #EEE;
+  background-color: rgba(0,0,0,.7);
+  border-right: none !important;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
 
 .jumbotron h1 {
   margin-top: 0;
+  color: #111;
   text-shadow:
   -1px -1px 0 #EEE,
   0px -1px 0 #EEE,
@@ -15,16 +33,10 @@ h1, h2, h3 { font-family: 'Special Elite', cursive;}
   1px 1px 0 #EEE;
 }
 .jumbotron {
-  background-image: url('/fenwaylg.jpg');
-  background-size: 100%;
+  background-image: url('fenwaylg.jpg');
+  background-size: cover;
 
   border-bottom: solid 4px #C60C30;
-}
-.jumbotron .well {
-  font-style: italic;
-  color: #EEE;
-  background-color: rgba(0,0,0,.7);
-  border-color: rgba(0,0,0,.5);
 }
 
 .list-group-item {
