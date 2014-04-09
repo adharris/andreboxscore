@@ -1,14 +1,70 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html ng-app="app">
   <head>
-     
-    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>The Andre Box Score</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles.css">
+    <link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.5/angular.min.js"></script>
+    <script src="/script.js"></script>
+
   </head>
   
   <body>
-    
+
+    <div class="jumbotron">
+      <h1>The Andre Box Score</h1>
+      <div class="row">
+        <div class="col-md-5 col-md-offset-7">
+          <div class="well">
+            <blockquote class='blockquote-reverse'>
+              The more games I go to, the better the RedSox do.
+              <footer>Andre</footer>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" ng-controller="ScoreController">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2 list-group">         
+          <div class="list-group-item" ng-repeat="game in games track by $index">
+            <div class="row">
+              <div class="col-md-2 text-center">{{ game.date | date }}</div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-xs-5 text-right">
+                    <team team="game.away"></team> 
+                  </div>
+                  <div class="col-xs-2 text-center">
+                    @
+                  </div>
+                  <div class="col-xs-5">
+                    <team team="game.home"></team> 
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="row">
+                  <div class="col-xs-4 text-center">
+                    <span>{{ game.away_score }}</span> - <span>{{ game.home_score }}</span>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    {{ {true: 'Won', false: 'Lost'}[game.outcome] }}
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a ng-href="game.url">recap</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

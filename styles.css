@@ -1,0 +1,61 @@
+body {
+  background-color: #002244;
+}
+
+h1, h2, h3 { font-family: 'Special Elite', cursive;}
+
+.jumbotron h1 {
+  margin-top: 0;
+  text-shadow:
+  -1px -1px 0 #EEE,
+  0px -1px 0 #EEE,
+  1px -1px 0 #EEE,
+  -1px 1px 0 #EEE,
+  0px 1px 0 #EEE,
+  1px 1px 0 #EEE;
+}
+.jumbotron {
+  background-image: url('/fenwaylg.jpg');
+  background-size: 100%;
+
+  border-bottom: solid 4px #C60C30;
+}
+.jumbotron .well {
+  font-style: italic;
+  color: #EEE;
+  background-color: rgba(0,0,0,.7);
+  border-color: rgba(0,0,0,.5);
+}
+
+.list-group-item {
+  color: white;
+  background-color:  #3D605A;
+}
+
+.list-group-item a {
+  font-weight: bold;
+  color: white;
+  text-decoration: underline;
+}
+
+tr a:hover {
+ color: #002244; 
+   text-shadow:
+    -1px -1px 0 rgba(245,245,245, .4),
+    0px -1px 0 rgba(245,245,245, .4),
+    1px -1px 0 rgba(245,245,245, .4),
+    -1px 1px 0 rgba(245,245,245, .4),
+    0px 1px 0 rgba(245,245,245, .4),
+    1px 1px 0 rgba(245,245,245, .4);
+}
+
+.team {
+  font-weight: bold;
+  text-shadow:
+    -1px -1px 0 rgba(245,245,245, .4),
+    0px -1px 0 rgba(245,245,245, .4),
+    1px -1px 0 rgba(245,245,245, .4),
+    -1px 1px 0 rgba(245,245,245, .4),
+    0px 1px 0 rgba(245,245,245, .4),
+    1px 1px 0 rgba(245,245,245, .4);
+}

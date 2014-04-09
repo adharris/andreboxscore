@@ -1,0 +1,22 @@
+{
+  "games": [
+    {
+      "date": "2014-04-08",
+      "away": "Texas Rangers",
+      "home": "Boston Red Sox",
+      "url": "http://mlb.mlb.com/mlb/gameday/index.jsp?gid=2014_04_08_texmlb_bosmlb_1&mode=wrap&c_id=bos",
+      "outcome": false,
+      "home_score": 7,
+      "away_score": 10
+    },
+    {
+      "date": "2014-04-08",
+      "away": "Toronto Blue Jays",
+      "home": "Boston Red Sox",
+      "url": "http://mlb.mlb.com/mlb/gameday/index.jsp?gid=2014_04_08_texmlb_bosmlb_1&mode=wrap&c_id=bos",
+      "outcome": false,
+      "home_score": 7,
+      "away_score": 10
+    }
+  ]
+}
