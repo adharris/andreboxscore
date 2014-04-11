@@ -15,8 +15,15 @@
   
   <body>
 
+    <nav></nav>
+
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="navbar-header">
+        <a class="navbar-brand fuzz" href="#">The YouthBuild Box Score</a>
+      </div>
+    </nav>
+
     <div class="jumbotron">
-      <h1>The Andre Box Score</h1>
       <div class="row">
         <div class="col-md-6 col-md-offset-6">
           <blockquote class='blockquote-reverse pull-right'>
@@ -34,13 +41,13 @@
         <div class="col-md-12 text-center">
           <p class="lead">
             Of the <span ng-pluralize count="games.length" when="{one: '1 game', other: '{} games'}"></span>
-            Andre has attended in 2014, the <team team="'Boston Red Sox'"></team> are:
+            YouthBuild Employees have attended in 2014, the <team team="'Boston Red Sox'"></team> are:
           </p>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-md-12 text-center score">
+        <div class="col-md-12 text-center score overall">
           <span>{{ wins }}</span>
           -
           <span>{{ losses }}</span>
@@ -50,7 +57,7 @@
       <div class="row">
         <div class="col-md-8 col-md-offset-2">         
           <div class="list-group">
-            <div class="list-group-item" ng-repeat="game in games track by $index">
+            <div class="list-group-item" ng-repeat="game in games track by game.date | orderBy:'date':true">
               <div class="row">
                 <div class="col-md-2 text-center">{{ game.date | date }}</div>
                 <div class="col-md-6">
@@ -66,24 +73,39 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                   <div class="row">
-                    <div class="col-xs-4 text-center">
+                    <div class="col-xs-8 text-center">
                       <span>{{ game.away_score }}</span> - <span>{{ game.home_score }}</span>
                     </div>
                     <div class="col-xs-4 text-center">
                       {{ {true: 'Won', false: 'Lost'}[game.outcome] }}
                     </div>
-                    <div class="col-xs-4 text-center">
-                      <a ng-href="{{game.url}}" target="_blank">recap</a>
-                    </div>
                   </div>
+                </div>
+
+                <div class="col-md-2 text-center">
+                  <ul class="list-unstyled name">
+                    <li ng-repeat="staff in game.staff">{{ staff }}</li>
+                  </ul> 
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <hr>
+
+      <div class="row staff-row" ng-repeat="(staff, games) in staff">
+        <div class="col-xs-6 name text-right">{{ staff }}</div>
+        <div class="col-xs-6">
+          <staff-score staff="staff"></staff-score>
+        </div>
+      </div>
+
+      <hr>
+
     </div>
   </body>
 </html>

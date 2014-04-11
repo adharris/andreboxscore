@@ -3,12 +3,49 @@ body {
   color: #eee;
 }
 
-h1, .score, .team { font-family: 'Special Elite', cursive;}
+h1, h3, .score, .team, .name { font-family: 'Special Elite', cursive;}
 
-.score { font-size: 100px }
+.score.overall { font-size: 100px; }
+
+hr {
+  width: 75%;
+  border-top: solid 1px #002230;
+}
 
 blockquote footer:after {
   content: '' !important;
+}
+
+nav.navbar {
+  background-color: #C60C30;
+  margin-bottom: 0;
+  border-color: #930000;
+}
+nav.navbar .navbar-brand {
+  color: #002244;
+  font-family: 'Special Elite', cursive;
+  font-size: 30px;
+  line-height: 34px;
+  padding: 12px 20px 4px;
+  
+    text-shadow: 
+     -1px -1px 0 rgba(255,255,255, .6),
+    0px -1px 0 rgba(255,255,255, .6),
+    1px -1px 0 rgba(255,255,255, .6),
+    -1px 1px 0 rgba(255,255,255, .6),
+    0px 1px 0 rgba(255,255,255, .6),
+    1px 1px 0 rgba(255,255,255, .6),
+ 
+    -2px -2px 0 rgba(93, 0, 0, .6),
+    0px -2px 0 rgba(93, 0, 0, .6), 
+    2px -2px 0 rgba(93, 0, 0, .6),
+    -2px 2px 0 rgba(93, 0, 0, .6),
+    0px 2px 0 rgba(93, 0, 0, .6),
+    2px 2px 0 rgba(93, 0, 0, .6);
+}
+
+nav.navbar .navbar-brand:hover {
+  color: #002244;
 }
 
 blockquote {
@@ -22,19 +59,18 @@ blockquote {
   padding: 1em !important;
 }
 
-.jumbotron h1 {
-  margin-top: 0;
-  color: #111;
-  text-shadow:
-  -1px -1px 0 #EEE,
-  0px -1px 0 #EEE,
-  1px -1px 0 #EEE,
-  -1px 1px 0 #EEE,
-  0px 1px 0 #EEE,
-  1px 1px 0 #EEE;
+.fuzz {
+  text-shadow: 
+    -1px -1px 0 rgba(255,255,255, .6),
+    0px -1px 0 rgba(255,255,255, .6),
+    1px -1px 0 rgba(255,255,255, .6),
+    -1px 1px 0 rgba(255,255,255, .6),
+    0px 1px 0 rgba(255,255,255, .6),
+    1px 1px 0 rgba(255,255,255, .6);
 }
+
 .jumbotron {
-  background-image: url('fenwaylg.jpg');
+  background-image: url('fenwaysm.jpg');
   background-size: cover;
 
   border-bottom: solid 4px #C60C30;
@@ -64,6 +100,7 @@ tr a:hover {
 
 .team {
   font-weight: bold;
+  font-size: 1.1em;
   text-shadow:
     -1px -1px 0 rgba(245,245,245, .4),
     0px -1px 0 rgba(245,245,245, .4),
@@ -71,4 +108,17 @@ tr a:hover {
     -1px 1px 0 rgba(245,245,245, .4),
     0px 1px 0 rgba(245,245,245, .4),
     1px 1px 0 rgba(245,245,245, .4);
+}
+
+.staff-row {
+  font-size: 2em;
+}
+
+.center-row {
+  display: table;
+}
+.center {
+  display: table-cell;
+  vertical-align: middle;
+  float: none;
 }

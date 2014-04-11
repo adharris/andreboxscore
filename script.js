@@ -1,65 +1,101 @@
-var colors = {
-      "Arizona Diamondbacks" :    ["A71930", "000000", "DBCEAC", "FFFFFF"],
-      "Atlanta Braves" :          ["002F5F", "B71234", "FFFFFF"],
-      "Baltimore Orioles" :       ["FB4F14", "000000", "FFFFFF"],
-      "Boston Red Sox" :          ["C60C30", "002244", "FFFFFF"],
-      "Chicago Cubs" :            ["003279", "CC0033", "FFFFFF"],
-      "Chicago White Sox" :       ["000000", "C0C0C0", "FFFFFF"],
-      "Cincinnati Reds" :         ["C6011F", "FFFFFF", "000000"],
-      "Colorado Rockies" :        ["000000", "333366", "C0C0C0", "FFFFFF"],
-      "Cleveland Indians" :       ["003366", "C80810", "FFFFFF"],
-      "Detroit Tigers" :          ["001742", "FFFFFF", "DE4406"],
-      "Houston Astros" :          ["072854", "FF7F00", "FFFFFF"],
-      "Kansas City Royals" :      ["15317E", "74B4FA", "FFFFFF"],
-      "LA Angels of Anaheim" :    ["B71234", "002244", "FFFFFF"],
-      "LA Dodgers" :              ["083C6B", "FFFFFF"],
-      "Miami Marlins" :           ["000000", "F9423A", "8A8D8F", "0077C8", "FFD100", "FFFFFF"],
-      "Milwaukee Brewers" :       ["182B49", "92754C", "FFFFFF"],
-      "Minnesota Twins" :         ["072754", "C6011F", "FFFFFF"],
-      "New York Mets" :           ["002C77", "FB4F14", "FFFFFF"],
-      "New York Yankees" :        ["1C2841", "FFFFFF", "808080"],
-      "Oakland Athletics" :       ["003831", "FFD800", "FFFFFF"],
-      "Philadelphia Phillies" :   ["BA0C2F", "FFFFFF", "003087"],
-      "Pittsburgh Pirates" :      ["000000", "FFBF00", "FFFFFF"],
-      "San Diego Padres" :        ["002147", "FFFFFF", "B4A76C"],
-      "San Francisco Giants" :    ["000000", "F2552C", "FFFDD0"],
-      "Seattle Mariners" :        ["0C2C56", "005C5C", "C0C0C0", "FFFFFF"],
-      "St Louis Cardinals" :      ["c41e3a", "0A2252", "FFFFFF"],
-      "Tampa Bay Rays" :          ["00285D", "9ECEEE", "FFFFFF", "ffd700"],
-      "Texas Rangers" :           ["BD1021", "FFFFFF", "003279"],
-      "Toronto Blue Jays" :       ["003DA5", "041E42", "FFFFFF", "DA291C"],
-      "Washington Nationals" :    ["BA122B", "11225B", "FFFFFF" ]
-};
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+function shadow(color, alpha) {
+  color = hexToRgb(color);
+  var rbga = "rgba(" + color.r + "," + color.g + "," + color.b + "," + alpha + ")";
+
+  return "-1px -1px 0 " + rbga + ", " +
+    "0px -1px 0 " + rbga + ", " +
+    "1px -1px 0 " + rbga + ", " +
+    "-1px 1px 0 " + rbga + ", " +
+    "0px 1px 0 " + rbga + ", " +
+    "1px 1px 0 " + rbga;
+}
+
 
 angular.module("app", [])
 
-.controller("ScoreController", function($scope, $http) {
-  console.log("booted");
-  $scope.games =  "test";
-  $scope.colors = colors;
-  $http.get("games.json").then(function(response) {
-    $scope.games = response.data.games;
-    $scope.wins = 0;
-    $scope.losses = 0;
+.factory("GameData", function($http) {
+  return $http.get("games.json").then(function(response) {
+    var game_map = {};
+    var count = 0;
     for (var i = 0; i < response.data.games.length; i++) {
-      if (response.data.games[i].outcome) $scope.wins++;
+      count++;
+      response.data.games[i].staff = [];
+      game_map[response.data.games[i].date] = response.data.games[i];
+    }
+
+    for (var staff_name in response.data.staff) {
+      for (i = 0; i < response.data.staff[staff_name].length; i++) {
+        game_map[response.data.staff[staff_name][i]].staff.push(staff_name);
+      }
+    }
+
+    response.data.game_map = game_map;
+    response.data.count = count;
+    return response.data;
+  });
+})
+
+.controller("ScoreController", function($scope, GameData) {
+  GameData.then(function(data) {
+    $scope.games = data.games;
+    $scope.staff = data.staff;
+    $scope.teams = data.teams;
+    $scope.wins   = 0;
+    $scope.losses = 0;
+    for (var i = 0; i < data.games.length; i++) {
+      if (data.games[i].outcome) $scope.wins++;
       else $scope.losses++;
     } 
   });
 })
 
-.directive("team", function() {
+.directive("team", function(GameData) {
   return {
     restrict: 'E',
     replace: true,
-    template: "<span class='team' ng-style='{color: color }'>{{ team }}</span>",
+    template: "<span class='team' ng-style='styles'>{{ team }}</span>",
     scope: {team: "="},
     link: function(scope, element, attrs) {
-      scope.$watch("team", function(team) {
-        if (colors[team]) {
-          scope.color = "#" + colors[team][0];
+      scope.styles = {};
+      GameData.then(function(data) {
+        scope.$watch("team", function(team) {
+          if (data.teams[team]) {
+            scope.styles.color = "#" + data.teams[team][0];
+            scope.styles['text-shadow'] = shadow(data.teams[team][1], ".5");
+            console.log(scope.styles['text-shadow']);
+          }
+        });
+      });
+    }
+  };
+})
+
+
+.directive("staffScore", function(GameData) {
+  return {
+    restrict: 'E',
+    replace: true,
+    template: "<div class='score'><span>{{ wins }}</span> - <span>{{ losses }}</span><div>",
+    scope: {staff: "="},
+    link: function(scope) {
+      scope.wins = scope.losses = 0;
+      GameData.then(function(data) {
+        for (var i = 0; i < data.staff[scope.staff].length; i++) {
+          if (data.game_map[data.staff[scope.staff][i]].outcome) scope.wins++;
+          else scope.losses++;
         }
       });
     }
   };
-});
+})
+
+;
